@@ -4,7 +4,7 @@ export default function Profile() {
  
     return (
       <View>
-        <Text> Profile </Text>
+        <Text>  </Text>
       </View>
     )
 
