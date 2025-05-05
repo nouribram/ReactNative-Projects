@@ -4,7 +4,7 @@ export default function Bookmarks() {
 
     return (
       <View>
-        <Text> bookmarks </Text>
+        <Text> bookmark</Text>
       </View>
     )
 
