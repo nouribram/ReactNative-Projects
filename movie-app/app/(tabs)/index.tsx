@@ -2,10 +2,12 @@ import { Text, View, Image, ScrollView } from "react-native";
 import {Link} from "expo-router";
 import {images} from "@/constants/images";
 import { icons } from "@/constants/icons";
-import { SearchBar } from "react-native-screens";
+import SearchBar from "@/components/SearchBar"
+
 
 export default function Index() {
   return (
+
     <View className="flex-1 bg-primary ">
      <Image source={images.bg} className="absolute w-full z-0"/>
   
@@ -18,5 +20,6 @@ export default function Index() {
      </View>
      </ScrollView>
   </View>
+
   );
 }
