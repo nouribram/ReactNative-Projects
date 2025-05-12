@@ -1,5 +1,5 @@
 export const TMDB_CONFIG ={
-    BASE_URL: '',
+    BASE_URL: 'https://api.themoviedb.org/3',
     API_KEY: process.env.EXPO_PUBLIC_MOVIE_API_KEY,
     headers: {
         accept: 'application/json',
@@ -7,11 +7,12 @@ export const TMDB_CONFIG ={
     }
 }
 
-export const fetchPopularMovies = async ({ query }: { query: string }) => {
+export const fetchMovies = async ({ query }: { query: string }) => {
 
-    const endpoint = 
-    
-    '/discover/movie?sort_by=popularity.desc';
+    const endpoint = query
+    ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+    : `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`;
+
 
     const response = await fetch(endpoint, {
         method: 'GET',
