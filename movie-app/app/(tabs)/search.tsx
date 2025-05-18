@@ -1,19 +1,48 @@
 import { View, Text, Image, FlatList, ActivityIndicator } from 'react-native'
-import React from 'react'
 import MovieCard from '@/components/MovieCard'
 import {images} from "@/constants/images";
+import useFetch from '@/services/useFetch';
+import { fetchMovies } from '@/services/api';
+import {icons} from "@/components/SearchBar";
+import { useEffect, useState } from 'react';
+
+
 
 const search = () => {
 
-  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  //const router = useRouter();
    
   const {
        data: movies, 
        loading, 
-       error
+       error,
+       refetch: loadMovies,
+       reset,
       } = useFetch(() => fetchMovies({
-       query: ''
-      }))
+       query: searchQuery
+      }), false)
+
+   
+      useEffect(() => {
+      
+        const func = async () => {
+
+        if(searchQuery.trim()){
+
+          await loadMovies();
+
+        } else {
+          
+          reset()
+        }
+      } 
+
+      func();
+
+      }, [searchQuery]);
+
 
 
   return (
@@ -41,7 +70,11 @@ const search = () => {
             </View>
 
             <View className="my-5">
-               <SearchBar placeholder="Search Movies ..." />
+               <SearchBar 
+               placeholder="Search Movies ..." 
+               value={searchQuery}
+               onChangeText={(text: string) => setSearchQuery(text)}
+               />
             </View>
 
             {loading && (
@@ -50,15 +83,15 @@ const search = () => {
 
             {error && (
               <Text className="text-red-500 px-5 my-3">
-                Error: moviesError.message
+                Error:{error.message}
               </Text>
             )}
 
-            {!loading && !error && 'SEARCH TERM'.trim()
+            {!loading && !error && searchQuery.trim()
              && movies ?.length > 0 && (
               <Text className='text-xl text-white font-bold'>
                 Search Result For{''}
-                <Text className="text-accent"> Search Term</Text>
+                <Text className="text-accent">{searchQuery}</Text>
               </Text>
             )}
             
