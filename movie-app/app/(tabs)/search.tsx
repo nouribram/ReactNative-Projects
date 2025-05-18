@@ -6,6 +6,15 @@ import {images} from "@/constants/images";
 const search = () => {
 
   const router = useRouter();
+   
+  const {
+       data: movies, 
+       loading, 
+       error
+      } = useFetch(() => fetchMovies({
+       query: ''
+      }))
+
 
   return (
     <View className="flex-1 bg-primary">
@@ -35,9 +44,25 @@ const search = () => {
                <SearchBar placeholder="Search Movies ..." />
             </View>
 
-            {moviesloading && (
+            {loading && (
               <ActivityIndicator size="large" color="#0000ff" className="my-3"/>
             )}
+
+            {error && (
+              <Text className="text-red-500 px-5 my-3">
+                Error: moviesError.message
+              </Text>
+            )}
+
+            {!loading && !error && 'SEARCH TERM'.trim()
+             && movies ?.length > 0 && (
+              <Text className='text-xl text-white font-bold'>
+                Search Result For{''}
+                <Text className="text-accent"> Search Term</Text>
+              </Text>
+            )}
+            
+
           </>
          }
        />
