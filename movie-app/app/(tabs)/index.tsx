@@ -1,4 +1,4 @@
-import { Text, View, Image, ScrollView, ActivityIndicator, FlatList } from "react-native";
+import { Text, View, FlatList, Image, ScrollView, ActivityIndicator, FlatList } from "react-native";
 import {Link} from "expo-router";
 import {images} from "@/constants/images";
 import { icons } from "@/constants/icons";
@@ -47,7 +47,24 @@ export default function Index() {
           <Text className="text-lg text-white font-bold mt-5 mb-3">Latest Movies</Text>
            <FlatList
              data={movies}
-             renderItem={}
+             renderItem={({ item })} => (
+                 <MovieCard 
+                   {...item}
+                 />
+            )}
+
+             keyExtractor={(item) => item.id
+             .toString()}
+
+             numColumns={3}
+             columnWrapperStyle={{
+               justifyContent: 'flex-start',
+               gap: 20,
+               paddingRight: 5,
+               marginBottom: 10
+             }}
+             className="mt-2 pb-32"
+             ScrollEnabled={false}
            /> 
       </>
 
