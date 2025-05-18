@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList } from 'react-native'
+import { View, Text, Image, FlatList, ActivityIndicator } from 'react-native'
 import React from 'react'
 import MovieCard from '@/components/MovieCard'
 import {images} from "@/constants/images";
@@ -35,7 +35,9 @@ const search = () => {
                <SearchBar placeholder="Search Movies ..." />
             </View>
 
-            {moviesloading}
+            {moviesloading && (
+              <ActivityIndicator size="large" color="#0000ff" className="my-3"/>
+            )}
           </>
          }
        />
