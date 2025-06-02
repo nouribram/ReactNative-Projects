@@ -4,6 +4,7 @@ export default function Index() {
   return (
     <View
       style={{
+        
         justifyContent: "center",
         alignItems: "center",
       }}
