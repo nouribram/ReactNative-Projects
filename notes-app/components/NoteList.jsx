@@ -1,19 +1,16 @@
-import { View } from "react-native";
- 
+import { View, FlatList } from "react-native";
+import NoteItem from "./NoteItem";
+
+
 const NoteList = ({notes}) => {
     return (<View>
 
          <FlatList 
                     data={notes}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <View style={styles.noteItem}>
-                        <Text style={styles.noteText}>{item.text}</Text>
-                        </View>
-                    )}
-        />
+                    renderItem={({ item }) => <NoteItem note={item} />} />
 
-    </View>);
+    </View> );
 }
  
 export default NoteList;

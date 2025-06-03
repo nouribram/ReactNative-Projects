@@ -1,4 +1,4 @@
-import {View, Text} from "react-native";
+import {View, Text, StyleSheet} from "react-native";
 
 const NoteItem = ({ note }) => {
     return ( 
@@ -7,5 +7,20 @@ const NoteItem = ({ note }) => {
         </View>
      );
 }
+
+const styles = StyleSheet.create({
+
+    noteItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: '#f5f5f5',
+        padding: 15,
+        borderRadius: 5,
+        marginVertical: 5,
+    },
+    noteText: {
+        fontSize: 18,
+    },
+});
  
 export default NoteItem;
