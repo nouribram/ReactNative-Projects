@@ -4,6 +4,8 @@ import { useRouter } from 'expo-router';
 
 
 const HomeScreen =() => {
+
+  const router = useRouter();
   return (
     <View style={ styles.constainer }>
       <Image source={ PostImage } style={styles.image}/>
