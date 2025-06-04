@@ -13,7 +13,7 @@ const  RootLayout = () => {
       fontWeight: 'bold',
     },
     contentStyle: {
-      paddingHorizontal: 10,
+      paddingHorizontal: 9,
       paddingTop: 10,
       backgroundColor: '#fff',
     }
