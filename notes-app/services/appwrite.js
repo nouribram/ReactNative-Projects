@@ -1,4 +1,4 @@
-import {Client, Database} from "react-native-appwrite"; 
+/*import {Client, Database} from "react-native-appwrite"; 
 import { Platform } from "react-native";
 
 
@@ -12,7 +12,7 @@ const config = {
 };
 
 const client = new Client()
-
+/*
 .setEndPoint(config.endpoint)
 .setProject(config.projectId);
 
@@ -25,4 +25,4 @@ switch(Platform.OS) {
 const database = new Databases(client);
 
 
-export { database, config, client };
+export { database, config, client };*/

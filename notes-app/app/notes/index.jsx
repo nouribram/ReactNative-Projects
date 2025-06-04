@@ -1,66 +1,81 @@
-import { useState  } from "react";
-import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Alert, 
+  ActivityIndicator // ✅ Import added here
+} from "react-native";
+import { useState, useEffect } from "react";
 import NoteList from "@/components/NoteList";
 import AddNoteModal from "@/components/AddNoteModal";
+import noteService from '@/services/noteService';
 
 const NoteScreen = () => {
+  const [notes, setNotes] = useState([]); 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newNote, setNewNote] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const [notes, setNotes] = useState([
-        {id: '1', Text: 'Note one'},
-        {id: '2', Text: 'Note two'},
-        {id: '3', Text: 'Note three'},
+  useEffect(() => { 
+    fetchNotes();
+  }, []);
 
-    ]);
-   
-    const [modalVisible, setModalVisible] = useState(false);
-    const [newNote, setNewNote] = useState('');
+  const fetchNotes = async () => {
+    setLoading(true);
+    const response = await noteService.getNotes();
 
-    // Add new note
-   
-    const addNote = () => {
-        if(newNote.trim() === '') return;
-
-        setNotes((prevNotes) => [
-            ...prevNotes,
-            { id: Date.now.toString(), text: newNote }
-        ]);
-
-        setNewNote('');
-        setModalVisible(false);
+    if(response.error) {
+      setError(response.error);
+      Alert.alert('Error', response.error); // typo fixed from 'Erorr' to 'Error'
+    } else {
+      setNotes(response.data);
+      setError(null);
     }
 
-    return( 
+    setLoading(false);
+  }
+
+  const addNote = async () => {
+    if(newNote.trim() === '') return;
+
+    const response = await noteService.addNote(newNote);
+
+    if(response.error){
+      Alert.alert('Error', response.error);
+    } else {
+      setNotes([...notes, response.data]);
+    }
+    setNewNote('');
+    setModalVisible(false);
+  }
+
+  return( 
     <View style={styles.container}>
-       
-       <NoteList notes={notes} />
+      {loading ? (
+        <ActivityIndicator size='large' color='#007bff' />
+      ) : (
+        <>
+          {error && <Text style={styles.errorText}>{error}</Text>}
+          <NoteList notes={notes} />
+        </>
+      )}
 
+      <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
+        <Text style={styles.addButtonText}>+ Add Note</Text> 
+      </TouchableOpacity>
 
-      {/*   <FlatList 
-         data={notes}
-         keyExtractor={(item) => item.id}
-         renderItem={({ item }) => (
-            <View style={styles.noteItem}>
-               <Text style={styles.noteText}>{item.text}</Text>
-            </View>
-         )}
-        />*/}
-
-        <TouchableOpacity style={styles.addButton} onPress={ () =>
-          setModalVisible(true) }>
-           <Text style={styles.addButtonText}>+ Add Note</Text> 
-        </TouchableOpacity>
-          
-          <AddNoteModal       
-           modalVisible={modalVisible}
-           setModalVisible={setModalVisible}
-           newNote={newNote}
-           setNewNote={setNewNote}
-           addNote={addNote}
-          />
-      
+      <AddNoteModal       
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        newNote={newNote}
+        setNewNote={setNewNote}
+        addNote={addNote}
+      />
     </View>
- );
-}
+  );
+};
 
 const styles = StyleSheet.create ({
     container: {
@@ -84,6 +99,12 @@ const styles = StyleSheet.create ({
         fontSize: 18,
         fontWeight: 'bold',
     },
+    errorText: {
+        color: 'red',
+        textAlign: 'center',
+        marginBottom: 10,
+        fontSize: 16,
+    }
   
 });
 
