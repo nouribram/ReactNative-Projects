@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f9fa'
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 110,
+    height: 110,
     marginBottom: 20,
     borderRadius: 10,
   },
