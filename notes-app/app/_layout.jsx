@@ -9,7 +9,7 @@ const  RootLayout = () => {
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: 'bold',
     },
     contentStyle: {
